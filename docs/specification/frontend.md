@@ -1,4 +1,28 @@
-<SignUp>
+# Component Structure
+
+## Auth Pages Structure
+
+- Signup
+- Login
+- Profile
+
+## Chats Structure
+
+- Chats
+  - Sidebar
+    - ConversationList
+    - NewChat
+    - LogOut
+  - /Sidebar
+  - Main
+    - ConversationThread
+    - NewMessageInput
+  - /Main
+- /Chats
+
+# Component Descriptions
+
+## SignUp Component
 
 State Variables
 
@@ -22,7 +46,7 @@ HTML
   - submit button
   - avatar upload
 
-<Login>
+## Login Component
 
 State Variables
 
@@ -41,7 +65,7 @@ HTML
   - username
   - password
 
-<Profile>
+## Profile Component
 
 State Variables
 
@@ -51,7 +75,7 @@ State Variables
 
 API Calls
 
-- Fetch to backend via Patch, to edit chosen values:
+- Fetch to backend via PATCH, to edit chosen values:
   - If successful, display confirmation message
   - If unnsucessful, display unsuccessful message and reasons.
 
@@ -63,26 +87,117 @@ HTML
   - avatar (edit option)
 - edit password modal
 
-<Chats> 
-    <Sidebar>
-        <ConversationList/>
-        <NewChat/>
-        <LogOut/>
-    </Sidebar>
-    <Main>
-        <ConversationThread/>
-        <NewMessageInput/>
+## Chats Component (Parent)
 
-    </Main>
+State Variables
 
-</Chats>
+API Calls
 
-<Chats/>
-<Sidebar/>
-    <ConversationList/>
-    <NewChat/>
-    <LogOut/>
+- None
 
-<Main/>
-    <ConversationThread/>
-    <NewMessageInput/>
+HTML
+
+- Display:
+  - Sidebar Component
+
+### Sidebar Component
+
+State Variables
+
+- None
+
+API Calls
+
+- None
+
+HTML
+
+- ConversationaList Component
+- NewChat Component
+- LogOut button
+
+### ConversationList Component
+
+State Variables
+
+- conversations
+
+API Calls
+
+- Fetch to backend db via GET: - if successs, updated conversations variable with array of conversations from db - if unsuccessful, display error messge -
+
+HTML
+
+- list of conversations -
+  - each conversation:
+    - avatar to the left
+    - header
+    - name of contact, or name of group if group
+    - 2 line summary of last message
+    - new chat button
+
+### NewChat Component
+
+State Variables
+
+- listOfContacts (for user who to start chat with)
+
+API Calls
+
+- Fetch to backend db to GET list of contacts:
+  - if success, updated listOfContacts variable
+  - if unsuccessful, display error message
+
+HTML
+
+- display contacts in sidebar
+- display chat window in main...
+
+## Main Component (Parent)
+
+State Variables
+
+- None
+
+API Calls
+
+- None
+
+HTML
+
+- Display:
+  - ConversationThread Component
+  - NewMessageInput Component
+
+### ConversationThread Component
+
+State Variables
+
+- Conversation
+
+API Calls
+
+- Fetch to backend db to GET conversation
+  - if success, update Conversation variable
+  - if unsuccessful, display error message
+
+HTML
+
+- display messges of conversation
+  - each message is comprised of:
+    - name of contact
+    - message text
+
+### NewMessageInput Component
+
+State Variables
+
+- newMessage (sender, recipient, messageText, time)
+
+API Calls
+
+- fetch to backend db via POST to insert new message into existing conversation
+
+HTML
+
+- input element for new message
