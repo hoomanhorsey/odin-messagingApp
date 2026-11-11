@@ -15,15 +15,29 @@ datasource db {
 model User { 
   id    Int     @id @default(autoincrement()) 
   email String  @unique
-  name  String?
-  posts Post[]
+  username  String?
+  displayname String?
+  password String
+  avatar String
+  messages Message[]
+  groups Conversation[]
 } 
 
-model Post { 
+model Message { 
   id        Int     @id @default(autoincrement()) 
-  title     String
-  content   String?
-  published Boolean @default(false) 
+  messageText   String?
+  conversation Conversation @relation(fields: [conversationId], references: [id])
+  conversationId Int 
   author    User    @relation(fields: [authorId], references: [id]) 
   authorId  Int
+  createdAt DateTime @default(now())
 } 
+
+model Conversation {
+  id Int @id @default(autoincrement()) 
+  conversationName String
+  messages Message[]
+  members User[] // Does the conversation have to list each of the members, or is it sufficient for a user to list which conversations they are in.
+  started DateTime @default(now())
+  
+}
