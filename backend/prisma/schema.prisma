@@ -12,32 +12,54 @@ datasource db {
   provider = "postgresql"
 }
 
+enum ConversationType {
+  DIRECT
+  GROUP
+}
+
 model User { 
   id    Int     @id @default(autoincrement()) 
   email String  @unique
-  username  String?
-  displayname String?
-  password String
-  avatar String
+  username  String @unique
+  displayName String 
+  passwordHash String
+  avatar String?
   messages Message[]
-  groups Conversation[]
-} 
+  memberships Membership[] 
+  createdConversations Conversation[]
+}
+
+model Conversation {
+  id Int @id @default(autoincrement()) 
+  name String?
+  type ConversationType @default(DIRECT)
+  createdById Int
+  createdBy User @relation(fields: [createdById], references: [id], onDelete: SetNull)
+  messages Message[]
+  memberships Membership[] 
+  createdAt DateTime @default(now())
+}
+
+model Membership {
+  userId Int 
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  conversationId Int
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  joinedAt DateTime @default(now())
+  
+  @@id([userId, conversationId])
+}
 
 model Message { 
   id        Int     @id @default(autoincrement()) 
   messageText   String?
-  conversation Conversation @relation(fields: [conversationId], references: [id])
   conversationId Int 
-  author    User    @relation(fields: [authorId], references: [id]) 
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade) 
   authorId  Int
+  author    User    @relation(fields: [authorId], references: [id], onDelete: SetNull) 
   createdAt DateTime @default(now())
+  
+  @@index([conversationId, createdAt])
+  @@index([authorId])
 } 
 
-model Conversation {
-  id Int @id @default(autoincrement()) 
-  conversationName String
-  messages Message[]
-  members User[] // Does the conversation have to list each of the members, or is it sufficient for a user to list which conversations they are in.
-  started DateTime @default(now())
-  
-}
