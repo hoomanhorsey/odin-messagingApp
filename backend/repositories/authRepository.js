@@ -1,11 +1,12 @@
 import { prisma } from "../lib/prisma.js";
 
-console.log(Object.keys(prisma).filter((k) => /user/i.test(k)));
+console.log("router called");
 
-async function addNewUser(newUser) {
+async function createUser(newUser) {
   const { username, displayName, email, passwordHash } = newUser;
   console.log("add logic to put new user in database");
   console.log(username, displayName, email);
+
   try {
     return await prisma.user.create({
       data: {
@@ -16,10 +17,20 @@ async function addNewUser(newUser) {
       },
     });
   } catch (error) {
-    console.error("Failed to insert new user");
+    if (error.code === "P2002") {
+      console.log("duplicate error", error.code, error.message);
+      const fields = error.meta?.target ?? [];
+      const message = fields.includes("email")
+        ? "Email already registered"
+        : "Username already taken";
+      const err = new Error(message, { cause: error });
+      err.statusCode = 409;
+      throw err;
+    }
     throw error;
   }
 }
+
 export default {
-  addNewUser,
+  createUser,
 };

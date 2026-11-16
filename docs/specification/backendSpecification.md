@@ -23,7 +23,7 @@ POST /api/chats - start new chat with a user (other user's ID goes in request bo
 
 GET /api/conversations/:id/messages - get full message thread for a conversation
 
-POST /api/conservations/:id/messages - send a new message in an existing conversation
+POST /api/conversations/:id/messages - send a new message in an existing conversation
 
 PATCH /api/messages/:id - edit your own message
 

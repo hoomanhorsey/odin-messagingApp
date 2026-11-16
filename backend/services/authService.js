@@ -1,10 +1,10 @@
 import authRepository from "../repositories/authRepository.js";
 
-async function addNewUser(newUser) {
+async function createUser(newUser) {
   console.log("add some logic to this");
-  authRepository.addNewUser(newUser);
+  return await authRepository.createUser(newUser);
 }
 
 export default {
-  addNewUser,
+  createUser,
 };
