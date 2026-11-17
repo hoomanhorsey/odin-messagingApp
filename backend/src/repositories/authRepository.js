@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "../../lib/prisma.js";
 
 console.log("router called");
 
@@ -31,6 +31,22 @@ async function createUser(newUser) {
   }
 }
 
+async function findUser(username) {
+  return await prisma.user.findUnique({
+    where: { username },
+    select: { id: true, username: true },
+  });
+}
+
+async function findUserById(id) {
+  return await prisma.user.findUnique({
+    where: { id },
+    select: { id: true, username: true },
+  });
+}
+
 export default {
   createUser,
+  findUser,
+  findUserById,
 };

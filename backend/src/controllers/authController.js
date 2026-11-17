@@ -13,7 +13,6 @@ async function signup(req, res) {
   } catch (error) {
     if (error.statusCode) {
       console.log(error.statusCode);
-
       return res.status(error.statusCode).json({ message: error.message });
     }
 
@@ -22,16 +21,17 @@ async function signup(req, res) {
   }
 }
 
-async function login(req, res) {
-  const returningUser = req.body;
-  console.log("hello login");
-  authService.loginUser(returningUser);
-}
+// TO DO - I don't think you need this function anymore as it's dealt with in the router function
+
+// async function login(req, res) {
+//   const returningUser = req.body;
+//   console.log("hello login");
+//   authService.loginUser(returningUser);
+// }
 
 async function logout(req, res) {}
 
 export default {
   signup,
-  login,
   logout,
 };

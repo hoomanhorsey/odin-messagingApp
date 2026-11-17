@@ -22,3 +22,7 @@ database
 
 - postgres database
 - prisma orm
+
+authentication
+
+- express session, passport, passport-local as per https://www.theodinproject.com/lessons/node-path-nodejs-authentication-basics
