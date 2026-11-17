@@ -1,3 +1,5 @@
+import bcrypt from "bcryptjs";
+
 import authService from "../services/authService.js";
 console.log("controller called");
 
@@ -6,7 +8,11 @@ async function signup(req, res) {
   console.log("hello signup");
 
   try {
+    // hashes submitted password
+    newUser.passwordHash = await bcrypt.hash(newUser.passwordHash, 10);
+
     await authService.createUser(newUser);
+
     res
       .status(201)
       .json({ message: "Signup received", username: newUser.username });

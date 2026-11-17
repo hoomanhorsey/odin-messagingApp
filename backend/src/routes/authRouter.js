@@ -33,6 +33,15 @@ authRouter.post(
 );
 
 // A user's session cookie is sent. authController.logout ends the session.
-authRouter.post("/logout", authController.logout);
+// authRouter.post("/logout", authController.logout);
+
+authRouter.post("/logout", (req, res, next) => {
+  req.logout((err) => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/");
+  });
+});
 
 export default authRouter;
