@@ -34,7 +34,7 @@ async function createUser(newUser) {
 async function findUser(username) {
   return await prisma.user.findUnique({
     where: { username },
-    select: { id: true, username: true },
+    select: { id: true, username: true, passwordHash: true },
   });
 }
 

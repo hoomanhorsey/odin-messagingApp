@@ -13,16 +13,30 @@ curl -X POST http://localhost:3000/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{"username":"Technoman","displayName":"TskTskers","email":"technoman@example.com","passwordHash":"testpass123"}'
 
-
-
-  LOGINS
-
-  curl -X POST http://localhost:3000/api/auth/login \
+curl -X POST http://localhost:3000/api/auth/signup \
   -H "Content-Type: application/json" \
-  -d '{"username":"Technoman","password":"testpass123"}'
+  -d '{"username":"slushy","displayName":"slushypoo","email":"slush@example.com","passwordHash":"testpass123"}'
 
-  - login showing a cookie
+LOGINS
 
-  curl -i -X POST http://localhost:3000/api/auth/login \
+
+
+curl -X POST http://localhost:3000/api/auth/login \
+-H "Content-Type: application/json" \
+-d '{"username":"Technoman","password":"testpass123"}'
+
+- login showing a cookie
+
+curl -i -X POST http://localhost:3000/api/auth/login \
+-H "Content-Type: application/json" \
+-d '{"username":"Technoman","password":"testpass123"}'
+
+//WRONG PASSWORD
+curl -i -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"username":"Technoman","password":"testpass123"}'
+  -d '{"username":"slushy","password":"wrongpassword"}'
+
+// CORRECT PASSWORD
+curl -i -X POST http://localhost:3000/api/auth/login \
+-H "Content-Type: application/json" \
+-d '{"username":"slushy","password":"testpass123"}'
