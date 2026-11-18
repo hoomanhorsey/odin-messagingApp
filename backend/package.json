@@ -1,7 +1,8 @@
 {
   "type": "module",
   "scripts": {
-    "dev": "node --watch app.js"
+    "dev": "node --watch app.js",
+    "seed": "node prisma/seed.js"
   },
   "devDependencies": {
     "prisma": "^7.10.1"

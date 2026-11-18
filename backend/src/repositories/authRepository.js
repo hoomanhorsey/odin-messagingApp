@@ -2,18 +2,17 @@ import { prisma } from "../../lib/prisma.js";
 
 console.log("router called");
 
-async function createUser(newUser) {
-  const { username, displayName, email, passwordHash } = newUser;
+async function createUser(username, displayName, email, passwordHash) {
   console.log("add logic to put new user in database");
   console.log(username, displayName, email);
 
   try {
     return await prisma.user.create({
       data: {
-        username: username,
-        displayName: displayName,
-        email: email,
-        passwordHash: passwordHash,
+        username,
+        displayName,
+        email,
+        passwordHash,
       },
     });
   } catch (error) {

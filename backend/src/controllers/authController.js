@@ -4,14 +4,17 @@ import authService from "../services/authService.js";
 console.log("controller called");
 
 async function signup(req, res) {
-  const newUser = req.body;
+  const { username, displayName, email, password } = req.body;
   console.log("hello signup");
 
   try {
-    // hashes submitted password
-    newUser.passwordHash = await bcrypt.hash(newUser.passwordHash, 10);
-
-    await authService.createUser(newUser);
+    const passwordHash = await bcrypt.hash(password, 10);
+    await authService.createUser({
+      username,
+      displayName,
+      email,
+      passwordHash,
+    });
 
     res
       .status(201)
@@ -26,14 +29,6 @@ async function signup(req, res) {
     res.status(500).json({ message: "Signup failed" });
   }
 }
-
-// TO DO - I don't think you need this function anymore as it's dealt with in the router function
-
-// async function login(req, res) {
-//   const returningUser = req.body;
-//   console.log("hello login");
-//   authService.loginUser(returningUser);
-// }
 
 async function logout(req, res) {}
 
