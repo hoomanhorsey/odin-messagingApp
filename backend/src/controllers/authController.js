@@ -16,9 +16,7 @@ async function signup(req, res) {
       passwordHash,
     });
 
-    res
-      .status(201)
-      .json({ message: "Signup received", username: newUser.username });
+    res.status(201).json({ message: "Signup received", username: username });
   } catch (error) {
     if (error.statusCode) {
       console.log(error.statusCode);

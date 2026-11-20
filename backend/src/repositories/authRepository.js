@@ -2,7 +2,7 @@ import { prisma } from "../../lib/prisma.js";
 
 console.log("router called");
 
-async function createUser(username, displayName, email, passwordHash) {
+async function createUser({ username, displayName, email, passwordHash }) {
   console.log("add logic to put new user in database");
   console.log(username, displayName, email);
 
